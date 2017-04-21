@@ -1,0 +1,40 @@
+<p>Coding Dojo Wall -----   Welcome:  <%= @users.username %></p>
+<a href="/users/<%= @users.id %>" data-method='delete'>Log Out</a>
+<% if flash[:errors] %>
+  <% flash[:errors].each do |error| %>
+  <p>
+    <%= error %>
+  </p>
+    <% end %>
+<% end %>
+
+<h1>Post a Message</h1>
+<form action='/users/<%= @users.id %>/messages' method='post'>
+  <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+  <textarea rows="10" cols="100" type='text' name='message[post]'>Say some shit.....</textarea>
+  <hr />
+  <input type="hidden" name='message[user_id]' selected value ="<%= @users.id %>">
+  <input type="submit" value="Post a Message" />
+</form>
+<div class="post">
+  <% @posts.each do |p| %>
+    <h2> <%= p.user.username %>-<%= p.created_at.strftime("%B %C, %G") %> </h2>
+    <p>Post: <%= p.post %> </p>
+        <h3>Comments:</h3>
+      <% @com.each do |comm| %>
+    <% if p.id == comm.message_id %>
+
+        <h4><%= comm.user.username %>--<%= comm.created_at.strftime("%B %C, %G")%> </h4>
+        <p><%= comm.comment %></p>
+
+      <% end %>
+    <% end %>
+    <form action='/users/<%= @users.id %>/messages/<%=p.id%>/comments' method='post'>
+      <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+      <textarea rows="5" cols="50" type='text' name='comment[comment]'>Comment about the Post</textarea>
+      <input type="hidden" name='comment[message_id]' selected value ="<%= p.id %>">
+      <input type="hidden" name='comment[user_id]' selected value ="<%= @users.id %>">
+      <input type="submit" value="Post a Comment" />
+    </form>
+  <% end %>
+</div>

@@ -1,0 +1,14 @@
+
+<h1>Sign In</h1>
+<% if flash[:errors] %>
+  <% flash[:errors].each do |error| %>
+  <p>
+    <%= error %>
+  </p>
+    <% end %>
+<% end %>
+<form action='/users' method='post'>
+  <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+  UserName:<input type='text' name='user[username]'/>
+  <input type='submit' value='Sign In' />
+</form>

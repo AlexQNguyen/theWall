@@ -1,0 +1,20 @@
+<p>Coding Dojo Wall -----   Welcome:  <%= @user.username %></p>
+<% if flash[:errors] %>
+  <% flash[:errors].each do |error| %>
+  <p>
+    <%= error %>
+  </p>
+    <% end %>
+<% end %>
+
+<h1>Post a Message</h1>
+<form action='' method='post'>
+  <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+  <textarea rows="10" cols="100" type='text' name='message'>Say some shit.....</textarea>
+  <hr />
+  <input type="submit" value="Post a Message" />
+</form>
+
+  <h2>Title of Post</h2>
+  <h4>UserName and date created</h4>
+  <p>Comments about the post</p>
